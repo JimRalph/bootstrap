@@ -1,0 +1,29 @@
+//import functions before anything else
+@import "../node_modules/bootstrap/scss/functions";
+$primary: red;
+
+//variables and mixins depend on values above so must be imported after
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+
+$custom-colors: (
+	"tertiary": orange,
+	"tertiary-light": rgb(248, 202, 118),
+	"tertiary-dark": rgb(54, 38, 8),
+);
+//use map-merge to apply custom variables to the default bootstrap ones
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@each $color, $value in $colors {
+	.bg-#{$color} {
+		background-color: $value;
+	}
+	.bg-#{$color}-light {
+		background-color: tint-color($value, 60%);
+	}
+	.bg-#{$color}-dark {
+		background-color: shade-color($value, 20%);
+	}
+}
+//import Bootstrap last
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
